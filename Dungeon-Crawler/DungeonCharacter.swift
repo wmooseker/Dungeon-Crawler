@@ -9,5 +9,11 @@
 import Foundation
 
 class DungeonCharacter {
+    var hitPoints: Int
+    var equippedWeapon: Weapon
     
+    init(hitPoints: Int, weapon: Weapon){
+        self.hitPoints = hitPoints
+        self.equippedWeapon = weapon
+    }
 }
