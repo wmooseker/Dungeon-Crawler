@@ -24,6 +24,7 @@ class GameScene: SKScene {
     // touch location
     var targetLocation: CGPoint = .zero
     var playerCharacter: SKSpriteNode!
+    var platform: SKTileMapNode!
 
     //let roomRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 200, height: 200) )
     
@@ -37,8 +38,21 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         loadSceneNodes()
-        physicsBody = SKPhysicsBody(bodies: <#T##[SKPhysicsBody]#>)
         maxSpeed = landMaxSpeed
+//        playerCharacter.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+//        for node in self.children {
+//            if (node.name == "platform") {
+//                if let someTileMap: SKTileMapNode = node as? SKTileMapNode {
+//                    giveTileMapPhysicsBody(map: someTileMap)
+//                    someTileMap.removeFromParent()
+//                }
+//                break
+//            }
+//        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -49,10 +63,6 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         targetLocation = touch.location(in: self)
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
     }
     
     override func didSimulatePhysics() {
