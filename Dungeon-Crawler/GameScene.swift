@@ -12,16 +12,13 @@ import GameplayKit
 class GameScene: SKScene {
     
     // constants
-    let waterMaxSpeed: CGFloat = 200
-    let landMaxSpeed: CGFloat = 4000
-    
-    // if within threshold range of the target, car begins slowing
-    let targetThreshold:CGFloat = 200
+    let charMaxSpeed: CGFloat = 1000
+
+    let targetThreshold:CGFloat = 100
     
     var maxSpeed: CGFloat = 0
     var acceleration: CGFloat = 0
-    
-    // touch location
+
     var targetLocation: CGPoint = .zero
     var playerCharacter: SKSpriteNode!
     var platform: SKTileMapNode!
@@ -38,7 +35,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         loadSceneNodes()
-        maxSpeed = landMaxSpeed
+        maxSpeed = charMaxSpeed
 //        playerCharacter.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
 //        for node in self.children {
 //            if (node.name == "platform") {
@@ -50,6 +47,9 @@ class GameScene: SKScene {
 //            }
 //        }
     }
+    
+//    func giveTileMapPhysicsBody(){
+//    }
     
     override func update(_ currentTime: TimeInterval) {
         
@@ -70,22 +70,16 @@ class GameScene: SKScene {
         let offset = CGPoint(x: targetLocation.x - playerCharacter.position.x,
                              y: targetLocation.y - playerCharacter.position.y)
         let distance = sqrt(offset.x * offset.x + offset.y * offset.y)
-        let carDirection = CGPoint(x:offset.x / distance,
+        let charDirection = CGPoint(x:offset.x / distance,
                                    y:offset.y / distance)
-        let carVelocity = CGPoint(x: carDirection.x * acceleration,
-                                  y: carDirection.y * acceleration)
+        let charVelocity = CGPoint(x: charDirection.x * acceleration,
+                                  y: charDirection.y * acceleration)
         
-        playerCharacter.physicsBody?.velocity = CGVector(dx: carVelocity.x, dy: carVelocity.y)
+        playerCharacter.physicsBody?.velocity = CGVector(dx: charVelocity.x, dy: charVelocity.y)
         
         if acceleration > 5 {
-            playerCharacter.zRotation = atan2(carVelocity.y, carVelocity.x)
+            playerCharacter.zRotation = atan2(charVelocity.y, charVelocity.x)
         }
-        
-        // update acceleration
-        // car speeds up to maximum
-        // if within threshold range of the target, car begins slowing
-        // if maxSpeed has reduced due to different tiles,
-        // may need to decelerate slowly to the new maxSpeed
         
         if distance < targetThreshold {
             let delta = targetThreshold - distance
@@ -103,6 +97,4 @@ class GameScene: SKScene {
         }
         
     }
-    
-  
 }
